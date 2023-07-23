@@ -1,5 +1,15 @@
-import React from 'react'
- function Home(){
-  return <div className='nav'>Home</div>
- }
- export default Home
+import React from "react";
+import Nav from "./Nav";
+
+
+function index(){
+    return(
+        <div className="Landing-Page">
+         
+            <Nav/>
+            This is  a landing page
+        
+        </div>
+    )
+}
+export default index;
