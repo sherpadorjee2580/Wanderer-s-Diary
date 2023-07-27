@@ -23,7 +23,15 @@ const SignupSchema = Yup.object().shape({
   .required('Required'),
   email: Yup.string().email('Invalid email').required('Required'),
 });
-
+const handleRegister=async(values)=>{
+  const {password, ...formFields}=values
+        const requestOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formFields)
+      };
+       await fetch('http://localhost:4000/register',requestOptions)
+}
  const register = () => (
   <div>
     <h1>Signup</h1>
@@ -34,11 +42,13 @@ const SignupSchema = Yup.object().shape({
         middleName: '',
         email: '',
         address: '',
+        password: ''
       }}
+      
       signup={SignupSchema}
       onSubmit={values => {
-        // same shape as initial values
-        console.log(values);
+        handleRegister(values)
+        
       }}
     >
       {({ errors, touched }) => (
@@ -55,13 +65,31 @@ const SignupSchema = Yup.object().shape({
           {errors.lastName && touched.lastName ? (
             <div>{errors.lastName}</div>
           ) : null}
-          <Field name="address" type="text" placeholder='Address' />
-          {errors.address && touched.address? (
-            <div>{errors.address}</div>
+          <br></br><br></br>
+          <Field name="email" type="email" placeholder="Email or Phone Number"/>
+          {errors.email && touched.email ? <div>{errors.email}</div> : null}
+          <br></br><br></br>
+
+          <Field name="password" type="text" placeholder='New Password' />
+          {errors.password && touched.password ? (
+            <div>{errors.password}</div>
           ) : null}
           
-          <Field name="email" type="email" />
-          {errors.email && touched.email ? <div>{errors.email}</div> : null}
+          <p>Date of Birth</p>
+          <Field name="year" type="box" placeholder='Year' />
+          {errors.year && touched.year ? (
+            <div>{errors.year}</div>
+          ) : null}
+            <Field name="month" type="box" placeholder='Month' />
+          {errors.month && touched.month ? (
+            <div>{errors.month}</div>
+          ) : null}
+            <Field name="day" type="box" placeholder='Day' />
+          {errors.day && touched.day ? (
+            <div>{errors.day}</div>
+          ) : null}
+<br></br><br></br>
+
           <button type="submit">Submit</button>
         </Form>
       )}
